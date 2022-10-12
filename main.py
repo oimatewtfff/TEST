@@ -1,7 +1,12 @@
 class TreeStore:
-    pass
+    def __init__(self, array):
+        self.array = array
 
+    def getAll(self):
+        return self.array
 
+    def getItem(self, id):
+        return self.array[id - 1]
 items = [
     {"id": 1, "parent": "root"},
     {"id": 2, "parent": 1, "type": "test"},
@@ -13,6 +18,9 @@ items = [
     {"id": 8, "parent": 4, "type": None}
 ]
 ts = TreeStore(items)
+
+# print(ts.getAll())
+print(ts.getItem(7))
 
 # Примеры использования:
 #  - ts.getAll() //
