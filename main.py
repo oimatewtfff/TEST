@@ -1,3 +1,6 @@
+from pprint import pprint
+
+
 class TreeStore:
     def __init__(self, array):
         self.array = array
@@ -6,7 +9,26 @@ class TreeStore:
         return self.array
 
     def getItem(self, id):
-        return self.array[id - 1]
+        for item in self.array:
+            if item['id'] == id:
+                return item
+
+    def getChildren(self, id):
+        result = []
+        for item in self.array:
+            if item['parent'] == id:
+                result.append(item)
+        return result
+
+    def getAllParents(self, id, result=[]):
+        test = self.getItem(id)['parent']
+        if test == 'root':
+            return [self.getItem(i) for i in result]
+        else:
+            result.append(test)
+            return self.getAllParents(id=test)
+
+
 items = [
     {"id": 1, "parent": "root"},
     {"id": 2, "parent": 1, "type": "test"},
@@ -19,8 +41,11 @@ items = [
 ]
 ts = TreeStore(items)
 
-# print(ts.getAll())
-print(ts.getItem(7))
+pprint(ts.getAll())
+pprint(ts.getItem(7))
+pprint(ts.getChildren(4))
+pprint(ts.getChildren(5))
+pprint(ts.getAllParents(7))
 
 # Примеры использования:
 #  - ts.getAll() //
